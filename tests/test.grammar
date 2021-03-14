@@ -1,0 +1,8 @@
+A->BB
+A->CD
+B->BB
+B->CD
+C->(
+D->BE
+D->)
+E->)
