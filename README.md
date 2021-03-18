@@ -9,8 +9,7 @@ $ sudo apt-get install check
 
 #### tests
 
-$ make build \
-$ make test
+$ make build && make test
 
 #### build
 

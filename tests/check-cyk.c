@@ -1,21 +1,22 @@
-/*! \file    check-PDA.c
- *  \brief   Тесты для НКА
+/*! \file    check-cyk.c
+ *  \brief   Тесты для CYK
  */
 #include <check.h>
 
 #include "../cyk.h"
+#include "../load_product.h"
 
 
-START_TEST(pdatest_0)
+START_TEST(cyktest_0)
 {
   g_filename = "tests/test.grammar";
-  g_terminal_alphabet = "[()]";
+  g_rhs_alphabet = "[()]";
 
   const char* string = "()(())";
 
 
   InitNonterminals();
-  InitProductions();
+  InitProductions(true);
 
   int len = strlen(string);
   bool occur_table[g_count_nonterminal][len][len];
@@ -25,6 +26,8 @@ START_TEST(pdatest_0)
   InitTable((bool*)occur_table, len, string);
   bool res = CYK((bool*)occur_table, len);
 
+  FreeProductions();
+  
   fail_unless(res, "should be equals true");
 }
 END_TEST
@@ -39,7 +42,7 @@ int main(void)
   int nf;
 
   suite_add_tcase(s1, tc1_1);
-  tcase_add_test(tc1_1, pdatest_0);
+  tcase_add_test(tc1_1, cyktest_0);
   srunner_run_all(sr, CK_NORMAL);
   nf = srunner_ntests_failed(sr);
   srunner_free(sr);
